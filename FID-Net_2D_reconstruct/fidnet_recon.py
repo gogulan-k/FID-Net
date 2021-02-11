@@ -5,7 +5,6 @@
 MODEL_WEIGHTS = './fidnet_recon.h5'
 # this should be changed to the absolute path of the downloaded weights file
 
-import os
 import tensorflow as tf
 import os, copy, sys
 from tensorflow import keras
