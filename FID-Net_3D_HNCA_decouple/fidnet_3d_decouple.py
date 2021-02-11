@@ -1,3 +1,10 @@
+#!/usr/bin/python
+# Gogulan Karunanithy, UCL, 2021
+# Code for performing 3D decoupling of HNCA and HN(CO)CA spectra using FID-Net
+
+MODEL_WEIGHTS = '../FID-Net_modelWeights/fidnet_3dca_decouple.h5'
+# this should be changed to the absolute path of the downloaded weights file
+
 import tensorflow as tf
 import os, copy, sys
 from tensorflow import keras
@@ -74,7 +81,6 @@ def setup_2d_plane(ft1_samp):
     return samp_av, scale
 
 def get_average_results(dat,Hpoints):
-    print('in shape...,', tf.shape(dat))
     res_div = np.zeros((512,Hpoints), dtype = np.float32)
     for i in range(Hpoints):
         ind = 4*i + 3
@@ -97,7 +103,7 @@ def rescale_dat(dat,scale):
     return dat
 
 
-def decouple_spec(file, model_weights_jcoup):
+def decouple_spec(model_weights_jcoup,file):
     model_jcoup = build_model(num_blocks = 3, num_filters = 32)
     model_jcoup.load_weights(model_weights_jcoup)
 
@@ -137,4 +143,4 @@ def decouple_spec(file, model_weights_jcoup):
     ng.pipe.write('test_decouple.ft2',dic, data_fin,overwrite=True)
 
 
-decouple_spec('example/T4L.ft2', '../FID-Net_modelWeights/fidnet_3dca_decouple.h5')
+decouple_spec(MODEL_WEIGHTS,'example/T4L.ft2')
