@@ -3,6 +3,7 @@
 # Code for performing reconstructions using FID-Net
 
 MODEL_WEIGHTS = './fidnet_recon.h5'
+# this should be changed to the absolute path of the downloaded weights file
 
 import os
 import tensorflow as tf
@@ -333,9 +334,5 @@ parser.add_argument('-ss','--ss', help='sampling schedule used to acquire data',
 parser.add_argument('-max','--max', help='the maxmium number of complex points in the NUS dimension', required=True)
 parser.add_argument('-out','--out', help='name of the output file"', required=False)
 args = vars(parser.parse_args())
-
-
-for key in args:
-    print(key, args[key])
 
 nmr_glue_batch_average(MODEL_WEIGHTS,args['in'],args['ss'],int(args['max']))
