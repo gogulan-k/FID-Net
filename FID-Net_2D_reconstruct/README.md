@@ -1,4 +1,4 @@
-FIDNet: Reconstructing 2D NUS Spectra
+FID-Net: Reconstructing 2D NUS Spectra
 ------------
 ------------
 This code is for reconstructing 2D NUS NMR spectra using the FID-Net architecture.
