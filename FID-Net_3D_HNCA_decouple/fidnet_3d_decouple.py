@@ -64,7 +64,7 @@ def setup_2d_plane(ft1_samp):
     # input 2d plane
     # output something that is happy to go into model.predict
     ft1_samp = tf.convert_to_tensor(ft1_samp)
-    padding_recon = [[3,3],[0,0]]
+    padding_recon = [[3,3],[0,512 - tf.shape(ft1_samp)[1]]]
     samp_av = tf.pad(ft1_samp, padding_recon, 'Constant', constant_values = 0.0)
     scale = np.array([np.max(np.fabs(samp_av[i:i+4,:])) for i in range((tf.shape(ft1_samp)[0]+3))])
     sampy = np.zeros((scale.shape[0], 4, tf.shape(samp_av)[1]))
@@ -103,17 +103,24 @@ def rescale_dat(dat,scale):
     return dat
 
 
-def decouple_spec(model_weights_jcoup,file):
+def decouple_spec(model_weights_jcoup,file,outfile):
     model_jcoup = build_model(num_blocks = 3, num_filters = 32)
     model_jcoup.load_weights(model_weights_jcoup)
 
     dic,data = ng.pipe.read(file)
+
+    Cpoints = data.shape[0]
+
+    if Cpoints>512:
+        print('This FID-Net can deal with a maximum of 256 complex points')
+        print('truncating the 13C dimension at 256 points')
+        data = data[:512,:,:]
+
     data_fin = np.zeros_like(data)
     print(data.shape)
     print(data_fin.shape)
-    data = np.transpose(data, axes = [1,2,0])
-    np1_spec = data.shape[1]
 
+    data = np.transpose(data, axes = [1,2,0])
 
     data_samp = copy.deepcopy(data)
 
@@ -136,11 +143,20 @@ def decouple_spec(model_weights_jcoup,file):
         res = tf.convert_to_tensor(res[0])
         res = rescale_dat(res,scale)
         res = get_average_results(res, ft1_samp.shape[0])
-        res = res[:,:512,:,0]
+        res = res[:,:Cpoints,:,0]
         data_fin[:,k,:] = res.numpy()[0,:,:]
 
 
-    ng.pipe.write('test_decouple.ft2',dic, data_fin,overwrite=True)
+    ng.pipe.write(outfile,dic, data_fin,overwrite=True)
 
+import argparse
+parser = argparse.ArgumentParser(description='FID-Net 3D HNCA decoupling')
+parser.add_argument('-in','--in', help='Input  spectra. This is a 3D HNCA or \
+                    HN(CO)CA spectra with the 13C dimension in the time domain. \
+                    The 15N and 1H dimensions should be phased and Fourier transformed. \
+                    The order of the input dimensions must be 1H,15N, 13C.', required=True)
+parser.add_argument('-out','--out', help='Name of output spectra. Defaults to \
+                        decouple.ft2', required=False, default = 'decouple.ft2')
+args = vars(parser.parse_args())
 
-decouple_spec(MODEL_WEIGHTS,'example/T4L.ft2')
+decouple_spec(MODEL_WEIGHTS,args['in'],args['out'])
