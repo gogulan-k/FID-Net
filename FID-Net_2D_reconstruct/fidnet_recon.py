@@ -228,7 +228,7 @@ def make_dl_dic(in_dic, max_points):
     dl_dic['FDSPECNUM'] = float(max_points)
     return dl_dic
 
-def nmr_glue_batch_average(model_weights,file,ss_file,max_points):
+def nmr_glue_batch_average(model_weights,file,ss_file,max_points,outfile):
 
     dic,data = ng.pipe.read(file)
 
@@ -304,7 +304,7 @@ def nmr_glue_batch_average(model_weights,file,ss_file,max_points):
 
     data_ft = data_ft/tf.reduce_max(data_ft)
     res_ft = res_ft/tf.reduce_max(res_ft)
-    ng.pipe.write("dl.ft1",dl_dic,res.numpy()[0],overwrite=True)
+    ng.pipe.write(outfile,dl_dic,res.numpy()[0],overwrite=True)
 
     ax1 = plt.subplot(2,2,1)
     ax2 = plt.subplot(2,2,3)
@@ -327,7 +327,7 @@ parser = argparse.ArgumentParser(description='FID-Net 2D NUS reconstruction')
 parser.add_argument('-in','--in', help='Input NUS spectra. This spectrum should only contain the sampled points', required=True)
 parser.add_argument('-ss','--ss', help='sampling schedule used to acquire data', required=True)
 parser.add_argument('-max','--max', help='the maxmium number of complex points in the NUS dimension', required=True)
-parser.add_argument('-out','--out', help='name of the output file"', required=False)
+parser.add_argument('-out','--out', help='name of the output file"', required=False, default='dl.ft1')
 args = vars(parser.parse_args())
 
-nmr_glue_batch_average(MODEL_WEIGHTS,args['in'],args['ss'],int(args['max']))
+nmr_glue_batch_average(MODEL_WEIGHTS,args['in'],args['ss'],int(args['max']),args['out'])
