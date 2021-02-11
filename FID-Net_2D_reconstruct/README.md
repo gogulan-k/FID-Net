@@ -7,6 +7,12 @@ downloaded. This is availble [here](https://www.dropbox.com/s/6qfaoae7n96mfuj/fi
 Once downloaded the MODEL_WEIGHTS line in fidnet_recon.py must be changed to the
 path to the weights file (fidnet_recon.h5). 
 
+The script can then be run as follows:
+python fidnet_recon.py -in infile -ss sampling_sched -max max_num_complex_points
+
+e.g. for the example spectrum:
+python fidnet_recon.py -in example/hdac_ex.ft1 -ss example/ss_hdac.out -max 192
+
 Dependencies
 ------------
   * [Python=3.8](https://www.python.org/downloads/)
@@ -15,10 +21,5 @@ Dependencies
   * [Matplotlib=3.2.2](http://matplotlib.org/users/installing.html)
   * [nmrglue=0.7](https://nmrglue.readthedocs.io/en/latest/install.html)
   
-The MQ-CEST fitting program has been written and tested in Python3 with the
+The FID-Net reconstruction script has been written and tested with the
 above dependencies. Performance with other module versions has not been tested.
-The script can then be run as follows:
-python fidnet_recon.py -in infile -ss sampling_sched -max max_num_complex_points
-
-e.g. for the example spectrum:
-python fidnet_recon.py -in example/hdac_ex.ft1 -ss example/ss_hdac.out -max 192
