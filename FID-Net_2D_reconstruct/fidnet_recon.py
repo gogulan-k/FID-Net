@@ -7,7 +7,6 @@ MODEL_WEIGHTS = './fidnet_recon.h5'
 
 import os
 import tensorflow as tf
-import time
 import os, copy, sys
 from tensorflow import keras
 import tensorflow.keras.backend as K
@@ -72,7 +71,6 @@ def rescale_dat(dat,scale):
 
 
 def get_average_results(dat,Hpoints):
-    print('in shape...,', tf.shape(dat))
     res_div = np.zeros((512,Hpoints), dtype = np.float32)
     for i in range(Hpoints):
         ind = 4*i + 3
@@ -109,8 +107,6 @@ def get_ind_spectra(dat,data_ft,Hpoints,Npoints,dl_dic,f1180=False,shift=False,f
 
 
     std_spec = np.std((spec_all[0][0,:,:].numpy(),spec_all[1][0,:,:].numpy(),spec_all[2][0,:,:].numpy(),spec_all[3][0,:,:].numpy()), axis=0)
-    print('hello')
-    print(std_spec.shape)
 
 
     std_dic = copy.deepcopy(dl_dic)
