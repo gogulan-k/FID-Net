@@ -102,40 +102,38 @@ def rescale_dat(dat,scale):
     dat = tf.transpose(dat, perm=[0,2,1,3])
     return dat
 
+def remake_dic(in_dic,Cpoints):
+    new_dic = copy.deepcopy(in_dic)
+    new_dic['FDF3TDSIZE'] = Cpoints//2
+    new_dic['FDF3SIZE'] = Cpoints
+    new_dic['FDF3apod'] = Cpoints//2
+    return new_dic
 
 def decouple_spec(model_weights_jcoup,file,outfile):
     model_jcoup = build_model(num_blocks = 3, num_filters = 32)
     model_jcoup.load_weights(model_weights_jcoup)
 
     dic,data = ng.pipe.read(file)
-
     Cpoints = data.shape[0]
 
     if Cpoints>512:
         print('This FID-Net can deal with a maximum of 256 complex points')
-        print('truncating the 13C dimension at 256 points')
+        print('truncating the 13C dimension at 256 complex points')
         data = data[:512,:,:]
+        Cpoints = 512
 
     data_fin = np.zeros_like(data)
-    print(data.shape)
-    print(data_fin.shape)
 
     data = np.transpose(data, axes = [1,2,0])
 
-    data_samp = copy.deepcopy(data)
-
+    dic_dl = remake_dic(dic, Cpoints)
     full_max = np.max(data)
-    full_max_samp = np.max(data_samp)
 
-    data = data/full_max
-    data_samp = data_samp/full_max_samp
 
     for k in range(data.shape[0]):
         print('doing plane ', k+1, ' of ', data.shape[0])
-        ft1_samp = data_samp[k,:,:]
+        ft1_samp = data[k,:,:]
 
-
-        plotty_ft1 = tf.expand_dims(data[k,:,:], axis = 0)
         samp_av, scale = setup_2d_plane(ft1_samp)
 
         res = model_jcoup.predict(samp_av)
@@ -146,8 +144,8 @@ def decouple_spec(model_weights_jcoup,file,outfile):
         res = res[:,:Cpoints,:,0]
         data_fin[:,k,:] = res.numpy()[0,:,:]
 
-
-    ng.pipe.write(outfile,dic, data_fin,overwrite=True)
+    data_fin *= full_max
+    ng.pipe.write(outfile,dic_dl, data_fin,overwrite=True)
 
 import argparse
 parser = argparse.ArgumentParser(description='FID-Net 3D HNCA decoupling')
