@@ -2,11 +2,11 @@
 # Gogulan Karunanithy, UCL, 2021
 # Code for performing reconstructions using FID-Net
 
-MODEL_WEIGHTS = './fidnet_recon.h5'
+MODEL_WEIGHTS = '../FID-Net_modelWeights/fidnet_recon.h5'
 # this should be changed to the absolute path of the downloaded weights file
 
 import tensorflow as tf
-import os, copy, sys
+import copy, sys
 from tensorflow import keras
 import tensorflow.keras.backend as K
 import numpy as np
