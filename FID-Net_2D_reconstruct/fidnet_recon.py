@@ -339,4 +339,3 @@ for key in args:
     print(key, args[key])
 
 nmr_glue_batch_average(MODEL_WEIGHTS,args['in'],args['ss'],int(args['max']))
-#nmr_glue_batch_average(MODEL_WEIGHTS,'hdac_ex.ft1','ss_hdac.out',192)
