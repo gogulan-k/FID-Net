@@ -7,6 +7,11 @@ downloaded. This is availble [here](https://www.dropbox.com/s/v4bw5hgst2q3hwi/fi
 Once downloaded the MODEL_WEIGHTS line in fidnet_recon.py must be changed to the
 path to the weights file (fidnet_3dca_decouple.h5).
 
+The script can then be run as follows:
+python fidnet_3d_decouple.py -in infile -out outfile
+
+The out argument is optional and will default to 'decouple.ft2'
+
 Dependencies
 ------------
   * [Python=3.8](https://www.python.org/downloads/)
