@@ -12,6 +12,10 @@ python fidnet_3d_decouple.py -in infile -out outfile
 
 The out argument is optional and will default to 'decouple.ft2'
 
+Note: the 3D HNCA decoupler can only work with up to 256 complex points in the
+13C dimension. Spectra containing more points than this will be truncated at
+256 complex points. 
+
 Dependencies
 ------------
   * [Python=3.8](https://www.python.org/downloads/)
