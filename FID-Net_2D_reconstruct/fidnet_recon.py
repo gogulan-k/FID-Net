@@ -2,7 +2,7 @@
 # Gogulan Karunanithy, UCL, 2021
 # Code for performing reconstructions using FID-Net
 
-MODEL_WEIGHTS = '../FID-Net_modelWeights/fidnet_recon.h5'
+MODEL_WEIGHTS = '../../FID-Net_modelWeights/fidnet_recon.h5'
 # this should be changed to the absolute path of the downloaded weights file
 
 import tensorflow as tf
@@ -184,7 +184,13 @@ def load_ss(ssfile, max_points):
                 line = line.split()
                 try:
                     ss.append(int(line[0]))
-                except:
+                    if int(line[0])>255:
+                        print('the network can only reconstruct up to 256 complex')
+                        print('points. The value ', int(line[0]), 'in the sampling')
+                        print('schedule is too large. Please adjust the input and')
+                        print('retry. Aborting now ...')
+                        sys.exit()
+                except ValueError:
                     print('only integer values are permitted in the sampling schedule (one per line)')
                     print('please check the sampling schedule for errors')
                     print('aborting now...')
@@ -199,25 +205,12 @@ def load_ss(ssfile, max_points):
     return ss
 
 
-def samp_from_ind(ind, shape):
-    np1 = shape[0]//2
-    np2 = shape[1]
-    onehot = tf.one_hot(ind, depth = np1)
-    onehot = tf.reduce_sum(onehot, axis=0)
-    onehot = tf.abs(onehot - 1.0)
-    ones = tf.ones(np2)
-
-    onehot_big = tf.tensordot(onehot, ones, axes=0)
-
-    return onehot_big
-
-
 def expand_data(data, ss, max_points, dir_points):
     exp_dat = np.zeros((max_points*2, dir_points))
     for i in range(ss.shape[0]):
         exp_dat[2*ss[i],:] = data[2*i,:]
         exp_dat[2*ss[i]+1,:] = data[2*i+1,:]
-    print(exp_dat.shape)
+
     return exp_dat
 
 def make_dl_dic(in_dic, max_points):
@@ -228,7 +221,19 @@ def make_dl_dic(in_dic, max_points):
     dl_dic['FDSPECNUM'] = float(max_points)
     return dl_dic
 
-def nmr_glue_batch_average(model_weights,file,ss_file,max_points,outfile):
+def nmr_glue_batch_average(model_weights,file,ss_file,max_points,outfile,f1180='y', shift = 'n'):
+
+    if f1180.lower() in ['y','n']:
+        if f1180.lower() == 'y':
+            f1180 = True
+        else:
+            f1180 = False
+
+    if shift.lower() in ['y','n']:
+        if shift.lower() == 'y':
+            shift = True
+        else:
+            shift = False
 
     dic,data = ng.pipe.read(file)
 
@@ -240,6 +245,13 @@ def nmr_glue_batch_average(model_weights,file,ss_file,max_points,outfile):
     ind_points = data.shape[0] # sampled points in indirect dim
     dir_points = data.shape[1] # sampled points in direct dim
 
+    if ind_points > 512:
+        print('the input spectrum contains too many sampled points')
+        print('the network can have a maximum of 256 complex points in the')
+        print('reconstructed spectra. Please reduce the size of the input')
+        print('aborting now...')
+        sys.exit()
+
     if ss.shape[0] == ind_points//2:
         print('number of recorded points in indirect dimension matches sampling schedule')
         print('proceeding with reconstruction...')
@@ -250,9 +262,12 @@ def nmr_glue_batch_average(model_weights,file,ss_file,max_points,outfile):
         print('aborting now...')
         sys.exit()
 
+    if max_points > 256:
+        print('the maximum size of the final spectrum is 256 complex points in')
+        print('the indirect dimension. The output will be truncated at this point')
+        max_points = 256
+
     data = expand_data(data, ss, max_points, dir_points)
-
-
     data = tf.convert_to_tensor(data)
 
     dl_dic = make_dl_dic(dic, max_points)
@@ -299,8 +314,8 @@ def nmr_glue_batch_average(model_weights,file,ss_file,max_points,outfile):
 
     res = res[:,:Npoints,:,0]
 
-    res_ft = ft_second(res, npoints1=Hpoints, npoints2=Npoints, f1180=True, shift = False)
-    data_ft = ft_second(data, npoints1=Hpoints, npoints2=Npoints, f1180=True, shift = False)
+    res_ft = ft_second(res, npoints1=Hpoints, npoints2=Npoints, f1180=f1180, shift = shift)
+    data_ft = ft_second(data, npoints1=Hpoints, npoints2=Npoints, f1180=f1180, shift = shift)
 
     data_ft = data_ft/tf.reduce_max(data_ft)
     res_ft = res_ft/tf.reduce_max(res_ft)
@@ -320,7 +335,7 @@ def nmr_glue_batch_average(model_weights,file,ss_file,max_points,outfile):
 
     plt.show()
 
-    get_ind_spectra(res_keep,res_ft,Hpoints,Npoints,dl_dic,f1180=True, shift=False)
+    get_ind_spectra(res_keep,res_ft,Hpoints,Npoints,dl_dic,f1180=f1180, shift=shift)
 
 import argparse
 parser = argparse.ArgumentParser(description='FID-Net 2D NUS reconstruction')
@@ -328,6 +343,8 @@ parser.add_argument('-in','--in', help='Input NUS spectra. This spectrum should 
 parser.add_argument('-ss','--ss', help='sampling schedule used to acquire data', required=True)
 parser.add_argument('-max','--max', help='the maxmium number of complex points in the NUS dimension', required=True)
 parser.add_argument('-out','--out', help='name of the output file"', required=False, default='dl.ft1')
+parser.add_argument('-f1180','--f1180', help='f1180 flag (y/n) only important for matplotlib output and std.ft2. Defaults to y"', required=False, default='y')
+parser.add_argument('-shift','--shift', help='frequency shift flag (y/n) only important for matplotlib output and std.ft2 Defaults to n"', required=False, default='n')
 args = vars(parser.parse_args())
 
-nmr_glue_batch_average(MODEL_WEIGHTS,args['in'],args['ss'],int(args['max']),args['out'])
+nmr_glue_batch_average(MODEL_WEIGHTS,args['in'],args['ss'],int(args['max']),args['out'],f1180=args['f1180'], shift = args['shift'])

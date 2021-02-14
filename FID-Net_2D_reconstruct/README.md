@@ -29,13 +29,15 @@ python fidnet_recon.py -in example/hdac_ex.ft1 -ss example/ss_hdac.out -max 192
       is given by the number of values in the sampling schedule divided by this
       value.
 
+-out: name of the output file. This is an optional argument and defaults to dl.ft1
+
 The output of the network is an nmrPipe file with the indirect dimension reconstructed
 in the time domain. The indirect dimension can now be processed (apodized, zero-filled,
 phased and Fourier transformed) to yield the final reconstructed spectrum. The
 analysis also outputs std.ft2, providing a measure of confidence in the outputs.
 This is also in nmrPipe format and is pre-processed and Fourier transformed according
 to default parameters. If these are incorrect a Hilbert transform and inverse Fourier
-transform can be applied to put this back into the time domain before reprocessing. 
+transform can be applied to put this back into the time domain before reprocessing.
 
 Dependencies
 ------------
