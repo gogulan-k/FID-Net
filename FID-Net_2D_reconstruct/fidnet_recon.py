@@ -221,7 +221,7 @@ def make_dl_dic(in_dic, max_points):
     dl_dic['FDSPECNUM'] = float(max_points)
     return dl_dic
 
-def nmr_glue_batch_average(model_weights,file,ss_file,max_points,outfile,f1180='y', shift = 'n'):
+def fidnet_doRecon2D(model_weights,file,ss_file,max_points,outfile,f1180='y', shift = 'n'):
 
     if f1180.lower() in ['y','n']:
         if f1180.lower() == 'y':
@@ -347,4 +347,4 @@ parser.add_argument('-f1180','--f1180', help='f1180 flag (y/n) only important fo
 parser.add_argument('-shift','--shift', help='frequency shift flag (y/n) only important for matplotlib output and std.ft2 Defaults to n"', required=False, default='n')
 args = vars(parser.parse_args())
 
-nmr_glue_batch_average(MODEL_WEIGHTS,args['in'],args['ss'],int(args['max']),args['out'],f1180=args['f1180'], shift = args['shift'])
+fidnet_doRecon2D(MODEL_WEIGHTS,args['in'],args['ss'],int(args['max']),args['out'],f1180=args['f1180'], shift = args['shift'])
