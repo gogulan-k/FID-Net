@@ -4,7 +4,7 @@ FID-Net: Decoupling 3D HNCA Spectra
 This code is for decoupling 3D HNCA and HN(COCA) spectra using the FID-Net architecture.
 To use the code, the file containing the weights for the trained network must be
 downloaded. This is availble [here](https://www.dropbox.com/s/v4bw5hgst2q3hwi/fidnet_3dca_decouple.h5?dl=0).
-Once downloaded the MODEL_WEIGHTS line in fidnet_recon.py must be changed to the
+Once downloaded the MODEL_WEIGHTS line in fidnet_3d_decouple.py must be changed to the
 path to the weights file (fidnet_3dca_decouple.h5).
 
 The script can then be run as follows:
@@ -14,7 +14,7 @@ The out argument is optional and will default to 'decouple.ft2'
 
 Note: the 3D HNCA decoupler can only work with up to 256 complex points in the
 13C dimension. Spectra containing more points than this will be truncated at
-256 complex points. 
+256 complex points.
 
 Dependencies
 ------------
