@@ -85,20 +85,6 @@ def direct_decouple(model_weights, infile, outfile, shift = True, f1180  = False
         print('direct dimension has more than 512 complex points')
         print('FID will be truncated at 512 complex points to run DNN')
         data = data[:,:512]
-        #Cpoints = data.shape[1]
-
-
-
-
-    c1_points = data.shape[1]*2
-    c1_obs = udic[1]['obs']
-    c1_sw = udic[1]['sw']
-    c1_car = udic[1]['car']
-
-    c2_points = data.shape[0]
-    c2_obs = udic[0]['obs']
-    c2_sw = udic[0]['sw']
-    c2_car = udic[0]['car']
 
     real_new = np.zeros((data.shape[0],2*data.shape[1]))
     real_new[:,::2] = np.real(data)
