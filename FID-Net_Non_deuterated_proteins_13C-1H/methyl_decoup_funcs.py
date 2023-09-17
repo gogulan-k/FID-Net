@@ -9,8 +9,8 @@ import nmrglue as ng
 import json, sys,copy, os
 from tensorflow.keras.mixed_precision import experimental as mixed_precision
 
-C13_MODEL = '/home/gogs/Methyl_Large_Proteins/jcoup_ca_hmqc_512.h5'
-H1_MODEL = '/home/gogs/Methyl_Large_Proteins/h_sharpen_256.h5'
+C13_MODEL = '/home/gogs/Methyl_Large_Proteins/fidnet_13c_methyl.h5'
+H1_MODEL = '/home/gogs/Methyl_Large_Proteins/fidnet_1h_methyl.h5'
 
 
 def read_data(infile):
