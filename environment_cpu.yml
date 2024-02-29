@@ -1,0 +1,12 @@
+name: fidnet
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.9,<3.12
+  - pip
+  - numpy
+  - tensorflow
+  - matplotlib
+  - pip:
+      - -e .
+      - nmrglue
