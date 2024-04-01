@@ -81,9 +81,8 @@ class Settings(BaseSettings):
     # Add subpaths to different files and directories here
     # in one central place instead of spreading them out
 
-    # TODO: Add URL to github release
-    base_url: str = "FILL_ME_IN"
-    weights_url: str = base_url + "weights/v1.0.0/"
+    base_url: str = "https://github.com/gogulan-k/FID-Net/releases/download/v0.1-alpha/"
+    weights_url: str = base_url
     example_url: str = base_url + "example/v1.0.0/example.tar.gz"
 
     # Weights
