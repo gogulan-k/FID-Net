@@ -13,7 +13,7 @@ import nmrglue as ng
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
-
+from pathlib import Path
 
 def build_model(num_blocks=3, num_filters=64):
     def ft_layer(x):
@@ -106,7 +106,7 @@ def get_average_results(dat, Hpoints):
 
 
 def get_ind_spectra(
-    dat, data_ft, Hpoints, Npoints, dl_dic, f1180=False, shift=False, flip=False
+    dat, data_ft, Hpoints, Npoints, dl_dic, outfile, f1180=False, shift=False, flip=False
 ):
     spec1 = np.zeros((512, Hpoints), dtype=np.float32)
     spec2 = np.zeros((512, Hpoints), dtype=np.float32)
@@ -155,7 +155,7 @@ def get_ind_spectra(
     if flip:
         std_spec = np.flip(std_spec, axis=0)
 
-    ng.pipe.write("std.ft2", std_dic, std_spec, overwrite=True)
+    ng.pipe.write(str(Path(outfile).parents[0] / "nus_std.ft2"), std_dic, std_spec, overwrite=True)
 
 
 def plot_contour(ax, ft_outer, col="viridis", lvl=None, invert=False):
@@ -384,8 +384,8 @@ def _fidnet_doRecon2D(
     plot_contour(ax3, res)
     plot_contour(ax4, res_ft, invert=True)
 
-    plt.show()
+    plt.savefig(outfile + ".png")
 
     get_ind_spectra(
-        res_keep, res_ft, Hpoints, Npoints, dl_dic, f1180=f1180, shift=shift
+        res_keep, res_ft, Hpoints, Npoints, dl_dic, outfile, f1180=f1180, shift=shift
     )
