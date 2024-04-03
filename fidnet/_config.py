@@ -81,10 +81,9 @@ class Settings(BaseSettings):
     # Add subpaths to different files and directories here
     # in one central place instead of spreading them out
 
-    base_url: str = "https://github.com/gogulan-k/FID-Net/releases/download/v0.1-alpha/"
+    base_url: str = "https://github.com/gogulan-k/FID-Net/releases/download/v0.2-alpha/"
     weights_url: str = base_url
-    example_url: str = base_url + "example/v1.0.0/example.tar.gz"
-
+    example_url: str = "https://github.com/gogulan-k/FID-Net/releases/download/v0.2-alpha/example.tar.gz"
     # Weights
     weights_dir: Path = _data_dir / "weights"
     weights_1h_methyl: Path = weights_dir / "fidnet_1h_methyl.h5"
@@ -108,7 +107,7 @@ class Settings(BaseSettings):
     example_dir: Path = _data_dir / "example"
 
     example_file_non_deuterated: Path = example_dir / "methyl" / "test.fid"
-    example_file_hnca: Path = example_dir / "hnca" / "test.ft2"
+    example_file_hnca: Path = example_dir / "hnca_decouple" / "test.ft2"
     example_file_nus_reconstruct: Path = example_dir / "nus" / "hdac_ex.ft1"
     example_file_nus_sampling_schedule: Path = example_dir / "nus" / "ss_hdac.out"
     example_file_ctcp: Path = example_dir / "ctcp_decouple" / "test001.ft1"
