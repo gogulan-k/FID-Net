@@ -94,7 +94,7 @@ def run_examples(skip_3d: bool = True):
     run_ca_direct_decouple(config.example_file_ca_detect, out_dir / "ca.ft1")
 
     print("\n2/6: Running CON decouple example.")
-    run_con_direct_decouple(config.example_file_con_decouple, out_dir / "con.ft1")
+    run_con_direct_decouple(config.example_file_con_decouple, out_dir / "con_decouple.ft1")
 
     print("\n3/6: Running CTCP decouple example.")
     run_ctcp_direct_decouple(config.example_file_ctcp, out_dir / "ctcp.ft1")
