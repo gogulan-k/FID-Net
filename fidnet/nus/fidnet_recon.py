@@ -2,8 +2,6 @@
 # Gogulan Karunanithy, UCL, 2021
 # Code for performing reconstructions using FID-Net
 
-MODEL_WEIGHTS = "../../FID-Net_modelWeights/fidnet_recon.h5"
-# this should be changed to the absolute path of the downloaded weights file
 
 import copy
 import sys
@@ -385,6 +383,8 @@ def _fidnet_doRecon2D(
     plot_contour(ax4, res_ft, invert=True)
 
     plt.savefig(outfile + ".png")
+
+    plt.close('all')
 
     get_ind_spectra(
         res_keep, res_ft, Hpoints, Npoints, dl_dic, outfile, f1180=f1180, shift=shift

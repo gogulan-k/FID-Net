@@ -3,8 +3,6 @@
 # Gogulan Karunanithy, UCL, 2021
 # Python code for decoupling 2D 'in-phase' CON spectra
 
-MODEL_WEIGHTS = "../../FID-Net_modelWeights/jcoup_2dctcp.h5"
-# this should be changed to the absolute path of the downloaded weights file
 
 import copy
 import sys
@@ -182,6 +180,8 @@ def direct_decouple(model_weights, infile, outfile, shift=True, f1180=False):
     )
 
     plt.savefig(outfile + ".png")
+
+    plt.close('all')
 
 
 def ft_second(ft, npoints1=128, npoints2=100, f1180=False, shift=False, smile=False):
