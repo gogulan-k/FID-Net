@@ -4,11 +4,8 @@ channels:
 dependencies:
   - python>=3.9,<3.12
   - pip
-  - numpy==1.23.4
-  - cudatoolkit
-  - tensorflow-gpu
+  - tensorflow[and-cuda]
   - matplotlib
   - pip:
       - -e .
       - nmrglue
-      - keras == 2.6
