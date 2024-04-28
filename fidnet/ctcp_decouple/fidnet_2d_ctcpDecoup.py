@@ -6,6 +6,9 @@
 
 import copy
 import sys
+import os
+
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 import matplotlib.pyplot as plt
 import nmrglue as ng
@@ -78,7 +81,7 @@ def build_model_wavenet_large(blocks=3, num_filters=64):
     model.compile(
         loss=["mse", "mse"],
         loss_weights=[0.0, 1.0],
-        optimizer=keras.optimizers.RMSprop(lr=1.0e-4),
+        optimizer=keras.optimizers.RMSprop(learning_rate=1.0e-4),
     )
 
     return model

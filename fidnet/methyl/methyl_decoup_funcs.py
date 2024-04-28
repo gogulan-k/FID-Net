@@ -3,6 +3,9 @@
 # Gogulan Karunanithy, UCL, 2023
 
 import copy
+import os
+
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 import nmrglue as ng
 import numpy as np
@@ -82,7 +85,7 @@ def build_model_wavenet_large():
     model.compile(
         loss=["mse", "mse"],
         loss_weights=[0.0, 1.0],
-        optimizer=keras.optimizers.RMSprop(lr=1.0e-4),
+        optimizer=keras.optimizers.RMSprop(learning_rate=1.0e-4),
     )
 
     return model
@@ -151,7 +154,7 @@ def build_model_wavenet():
     model.compile(
         loss=["mse", "mse"],
         loss_weights=[0.0, 1.0],
-        optimizer=keras.optimizers.RMSprop(lr=1.0e-4),
+        optimizer=keras.optimizers.RMSprop(learning_rate=1.0e-4),
     )
 
     return model
