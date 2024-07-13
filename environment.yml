@@ -2,10 +2,10 @@ name: fidnet
 channels:
   - conda-forge
 dependencies:
-  - python>=3.9,<3.12
+  - python==3.11
   - pip
-  - tensorflow[and-cuda]
-  - matplotlib
+  - tensorflow[and-cuda]==2.15
+  - matplotlib==3.9
   - pip:
       - -e .
-      - nmrglue
+      - nmrglue==0.1
