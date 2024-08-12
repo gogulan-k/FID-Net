@@ -114,7 +114,7 @@ class Settings(BaseSettings):
     example_file_nus_sampling_schedule: Path = example_dir / "nus" / "ss_hdac.out"
     example_file_ctcp: Path = example_dir / "ctcp_decouple" / "test001.ft1"
     example_file_con_decouple: Path = example_dir / "con_decouple" / "test001.ft1"
-    example_file_ca_detect: Path = example_dir / "ca_detect" / "test.ft1"
+    example_file_ca_detect: Path = example_dir / "ca_detect" / "test001.ft1"
     example_file_aromatic: Path = example_dir / "aromatic" / "test.ft1"
 
     def __str__(self):
