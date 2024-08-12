@@ -165,7 +165,8 @@ https://github.com/gogulan-k/FID-Net
 │                        of spectra for uniformly 13C-1H labelled             │
 │                        proteins.                                            │
 │ hnca                   FID-Net 3D HNCA decoupling.                          │
-│ reconstruct            FID-Net 2D Non-Uniform Sampling (NUS) reconstruction │
+│ reconstruct            FID-Net 2D Non-Uniform Sampling (NUS) reconstruction |
+| aromatic               FID-Net2 for spectra for Aromatic Sidechains         │
 │ run-examples           Run all the examples in one go.                      │
 │ download-example-data  Download example data to try out the different       │
 │                        FID-Net functions.                                   │
