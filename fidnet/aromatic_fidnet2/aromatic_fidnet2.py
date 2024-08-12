@@ -9,7 +9,7 @@
 
 """
 
-from hansenlab import MYSTRING
+from fidnet.aromatic_fidnet2.hansenlab import MYSTRING
 
 counter=0
 for l in MYSTRING:
@@ -110,7 +110,7 @@ import tensorflow as tf
 import numpy      as np 
 import nmrglue    as ng
 import logging
-from FIDNet import *
+from fidnet.aromatic_fidnet2.FIDNet import *
 
 #
 # Let us check the compute power of the GPU (if there)

@@ -7,7 +7,7 @@ from fidnet.ctcp_decouple.fidnet_2d_ctcpDecoup import direct_decouple as _ctcp_d
 from fidnet.hnca.fidnet_3d_decouple import decouple_spec as _hnca_decouple_spec
 from fidnet.methyl.run_methyl import run_net as _methyl_run_net
 from fidnet.nus.fidnet_recon import _fidnet_doRecon2D
-from aromatic_fidnet2 import _aromatic_fidnet2
+from fidnet.aromatic_fidnet2.aromatic_fidnet2 import _aromatic_fidnet2
 from fidnet.util import download_weights
 
 
