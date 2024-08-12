@@ -15,6 +15,7 @@ def download_example_data(force: bool = False):
         config.example_file_ctcp,
         config.example_file_con_decouple,
         config.example_file_ca_detect,
+        config.example_file_aromatic,
     ]
     # ALl important input files are present
     if all([example_file.exists() for example_file in example_files]) and not force:

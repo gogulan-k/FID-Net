@@ -172,6 +172,35 @@ def hnca(
     run_3d_hnca(infile, outfile)
 
 
+@cli.command("aromatic", no_args_is_help=True)
+def aromatic(
+    infile: Path = typer.Option(
+        help = "this is the input spectrum (pseudo-3D-nmrPipe-file.ft1')"
+    ),
+    UseGPU: bool = typer.Option(
+        default = True,
+        help = "True to use GPU, False for CPU analysis"
+    ),
+    GPUIDX: int = typer.Option(
+        default = None,
+        help = "GPU number to use"
+    ),
+    offset1h: float = typer.Option(
+        default = 0.4,
+        help = "Set the offset for the sine-squared window function "
+                "in the 1H dimension. Default is 0.40, which was "
+                "used during training"
+    ),
+    offset13c: float = typer.Option(
+        default = 0.4,
+        help = "Set the offset for the sine-squared window function "
+                "in the 13C dimension. Default is 0.40, which was "
+                "used during training"        
+    )
+):
+    from fidnet.experiments import run_aromatic
+    run_aromatic(infile, UseGPU, GPUIDX, offset1h, offset13c)
+
 @cli.command("reconstruct", no_args_is_help=True)
 def reconstruct(
     infile: Path = typer.Option(

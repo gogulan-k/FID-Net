@@ -81,9 +81,9 @@ class Settings(BaseSettings):
     # Add subpaths to different files and directories here
     # in one central place instead of spreading them out
 
-    base_url: str = "https://github.com/gogulan-k/FID-Net/releases/download/v0.2-alpha/"
+    base_url: str = "https://github.com/gogulan-k/FID-Net/releases/download/v0.5-alpha/"
     weights_url: str = base_url
-    example_url: str = "https://github.com/gogulan-k/FID-Net/releases/download/v0.2-alpha/example.tar.gz"
+    example_url: str = "https://github.com/gogulan-k/FID-Net/releases/download/v0.5-alpha/example.tar.gz"
     # Weights
     weights_dir: Path = _data_dir / "weights"
     weights_1h_methyl: Path = weights_dir / "fidnet_1h_methyl.h5"
@@ -93,6 +93,7 @@ class Settings(BaseSettings):
     weights_ctcp: Path = weights_dir / "jcoup_2dctcp.h5"
     weights_con_decouple: Path = weights_dir / "jcoup_2dcon.h5"
     weights_ca_detect: Path = weights_dir / "jcoup_2dcadet.h5"
+    weights_aromatic: Path = weights_dir / "Aromatic_weights.h5"
 
     weight_checksums: dict[Path, str] = {
         weights_1h_methyl: "a95b14795bbd9ef05604d6677f99362e",
@@ -102,6 +103,7 @@ class Settings(BaseSettings):
         weights_ctcp: "7f181904769939dc1f05e5ef58a3f1d6",
         weights_con_decouple: "ba1e3699a7cd7d48a682912c1497c7be",
         weights_ca_detect: "40f28f58cd0a714c88a56a3426b7dd7d",
+        weights_aromatic:"e403c9f2f97e80d0a9ce82c6483215a1",
     }
 
     example_dir: Path = _data_dir / "example"
@@ -113,6 +115,7 @@ class Settings(BaseSettings):
     example_file_ctcp: Path = example_dir / "ctcp_decouple" / "test001.ft1"
     example_file_con_decouple: Path = example_dir / "con_decouple" / "test001.ft1"
     example_file_ca_detect: Path = example_dir / "ca_detect" / "test.ft1"
+    example_file_aromatic: Path = example_dir / "aromatic" / "test.ft1"
 
     def __str__(self):
         return (
