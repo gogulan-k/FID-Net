@@ -20,6 +20,7 @@ Deep Neural Networks for Analysing NMR time domain data. See:
     - [FID-Net 2D NUS reconstruction](#fid-net-2d-nus-reconstruction)
     - [3D HNCA Decoupling](#3d-hnca-decoupling)
     - [Methyl Decoupling](#methyl-decoupling)
+    -[FID-Net2 for Aromatic Sidechains](#FID-Net2-for-Aromatic-Sidechains)
 - [Development](#development)
 
 ## Quick Start
