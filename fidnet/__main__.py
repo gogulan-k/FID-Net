@@ -177,6 +177,9 @@ def aromatic(
     infile: Path = typer.Option(
         help = "this is the input spectrum (pseudo-3D-nmrPipe-file.ft1')"
     ),
+        outfile: Path = typer.Option(
+        default="aromatic_output.ft2", help="name of the output file"
+    ),
     UseGPU: bool = typer.Option(
         default = True,
         help = "True to use GPU, False for CPU analysis"
@@ -199,7 +202,7 @@ def aromatic(
     )
 ):
     from fidnet.experiments import run_aromatic
-    run_aromatic(infile, UseGPU, GPUIDX, offset1h, offset13c)
+    run_aromatic(infile, outfile, UseGPU, GPUIDX, offset1h, offset13c)
 
 @cli.command("reconstruct", no_args_is_help=True)
 def reconstruct(

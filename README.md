@@ -482,6 +482,42 @@ The second network sharpens peaks in the 1H dimension.
 The example folder contains data for uniformly 13C-1H labelled HDAC8.
 
 
+### FID-Net2 for Aromatic Sidechains
+
+```shell
+(fidnet) ➜  ~ fidnet aromatic --help
+
+ Usage: fidnet aromatic [OPTIONS]
+
+ FID-Net2 ransforms NMR spectra recorded on simple uniformly 13C labelled samples to 
+ yield high-quality 1H-13C correlation spectra of the aromatic side chains. 
+ Spectra should be recorded with the dedicated pulse programme
+
+╭─ Options ───────────────────────────────────────────────────────────────────────╮
+│ *  --infile                 PATH   Input spectra. This should be a pseudo-3D    │
+│                                    NMR pipe file that has been recorded using   │
+│                                    the dedicated pulse sequence (see folder)    │
+│                                                                                 │
+│                                    [default: None]                              │
+│                                    [required]                                   │
+│    --outfile                PATH   filename for final processed spectrum.       │
+│                                    [default: aromatic_output.ft2]               │
+│    --UseGPU                 BOOL   True to use GPU.                             │
+|                                    [default: True]                              |
+│    --GPUIDX                 INT    GPU number to use                            │
+|                                    [default: None]                              |
+│    --offset1h               FLOAT  Set the offset for the sine-squared window   |
+|                                    function in the 1H dimension. Default is     |
+|                                    0.40, which was used during training         │
+│                                    [default: 0.4]                               |
+│    --offset13c              FLOAT  Set the offset for the sine-squared window   |
+|                                    function in the 1H dimension. Default is     |
+|                                    0.40, which was used during training         │
+│                                    [default: 0.4]                               |
+│    --help                          Show this message and exit.                  │
+╰─────────────────────────────────────────────────────────────────────────────────╯
+```
+
 ## Development
 You can install pre-commit hooks that do some checks before you commit your code:
 

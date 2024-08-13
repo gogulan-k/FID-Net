@@ -7,6 +7,8 @@
   Written by D Flemming Hansen
   April 2024, flemming.hansen@crick.ac.uk / d.hansen@ucl.ac.uk
 
+  Citation: VK Shukla, G Karunanithy, P Vallurupalli, DF Hansen
+            bioRxiv (2024),https://doi.org/10.1101/2024.04.01.587635 
 """
 
 from fidnet.aromatic_fidnet2.hansenlab import MYSTRING
@@ -17,99 +19,12 @@ for l in MYSTRING:
     print(l[258+133+131:])
   counter+=1
 
-# import sys
-# #sys.exit(10)
-
-# def usage():
-#   print(f' USAGE: {sys.argv[0]} [params] pseudo-3D-nmrPipe-file.ft1')
-#   print(f' ')
-#   print(f' The following parameters are available: ')
-#   print(f'    -gpu:        For processing on your fastest GPU   [DEFAULT] ')
-#   print(f'    -gpu=0:      For processing on GPU number 0 ')
-#   print(f'    -cpu:        For processing on CPU')  
-#   print(f'    -weights=dir Specify directory with the weights Aromatic_weights.h5')
-#   print(f'                 dir defaults to current directory "./"')
-#   print(f'                 If the environment variable FIDNET_WEIGHTS_DIR is set,')
-#   print(f'                 then the weights are read from that directory')
-#   print(f'    -offset1h=f  Set the offset for the sine-squared window function')
-#   print(f'                 in the 1H dimension. ')
-#   print(f'                 Default is 0.40, which was used during training')
-#   print(f'    -offset13c=f Set the offset for the sine-squared window function')
-#   print(f'                 in the 13C dimension. ')
-#   print(f'                 Default is 0.40, which was used during training')
-    
-# import os,sys
-
-# print(f' ####################################################################')
-# print(f' FID-Net-2 processing of aromatic 13C-1H correlation maps')
-# print()
-# print(f' Citation: ')
-# print(f'    VK Shukla, G Karunanithy, P Vallurupalli, DF Hansen')
-# print(f'    bioRxiv (2024),')
-# print(f'    https://doi.org/10.1101/2024.04.01.587635  ')
-# print()
-# print(f' Written by D Flemming Hansen ')
-# print(f' April 2024, flemming.hansen@crick.ac.uk / d.hansen@ucl.ac.uk ')
-# print()
-# print(f' ####################################################################')
-
-# if len(sys.argv)<2:
-#   usage()
-#   sys.stdout.flush()
-#   sys.exit(1)
-
-# # This is where the original weights come from
-# # os.environ['FIDNET_WEIGHTS'] = "./checkpointer_FullySampled_200_Roof_small2/fidnet_model_7pts/"
-
-# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-
-# UseGPU=True
-# GPUIDX=None
-# offset1h=0.40
-# offset13c=0.40
-
-# strip_args=[]
-# for arg in sys.argv:
-
-#   if arg[0]=='-':
-#     if 'gpu' in arg.lower():
-#       #
-#       # Do we also speficy the GPU to use?
-#       if len(arg.split('='))>1:
-#         GPUIDX=int(arg.split('=')[1])
-    
-#     elif 'cpu' in arg.lower():
-#       UseGPU=False
-#       os.environ['CUDA_VISIBLE_DEVICES']=""    
-
-#     elif 'offset1h' in arg.lower():
-#       offset1h = float(arg.split('=')[1])
-      
-#     elif 'offset13c' in arg.lower():
-#       offset13c = float(arg.split('=')[1])
-      
-#     elif 'help' in arg.lower():
-#       usage()
-#       sys.exit(1)
-
-#     elif 'weights' in arg.lower():
-#       os.environ['FIDNET_WEIGHTS_DIR']=arg.split('=')[1]
-      
-#   else:
-#     strip_args.append(arg)
-          
-# try:
-#   os.environ['FIDNET_WEIGHTS_DIR']
-# except(KeyError):
-#   os.environ['FIDNET_WEIGHTS_DIR']='./'  
-
-# #
-# print(f' INFO: Reading weights from {  os.environ["FIDNET_WEIGHTS_DIR"] }')
   
 import tensorflow as tf
 import numpy      as np 
 import nmrglue    as ng
 import logging
+from pathlib import Path
 from fidnet.aromatic_fidnet2.FIDNet import *
 
 #
@@ -163,7 +78,7 @@ def check_gpus(UseGPU, GPUIDX):
 #Suppress tensorflow warnings
 logging.getLogger('tensorflow').setLevel(logging.ERROR)
 
-def _aromatic_fidnet2(infile, model_weights, UseGPU, GPUIDX, offset1h, offset13c):
+def _aromatic_fidnet2(infile, outfile, model_weights, UseGPU, GPUIDX, offset1h, offset13c):
   strategy = check_gpus(UseGPU, GPUIDX)
   with strategy.scope():
     
@@ -222,6 +137,14 @@ def _aromatic_fidnet2(infile, model_weights, UseGPU, GPUIDX, offset1h, offset13c
     model.load_weights(model_weights)
     
   infile_nc  = infile
+  if outfile is None:
+    outfile = infile.parent / Path('dec.ft2')
+  else:
+    outfile = Path(outfile).with_suffix('.ft2')
+
+  esdfile = outfile.parent / 'esd_aromatic.ft2'
+  inpfile = outfile.parent / 'inp_aromatic.ft2'
+
   dic_nc, data_nc = ng.pipe.read(infile_nc)
 
   data_c = data_nc[1,:,:]
@@ -371,7 +294,7 @@ def _aromatic_fidnet2(infile, model_weights, UseGPU, GPUIDX, offset1h, offset13c
   print('    Input spectrum for reference (inp.ft2) ')
   print('    saved with shape', HCout.shape, 'in nmrPipe format')
 
-  ng.pipe.write('./dec.ft2',dic_nc, HCout.numpy().real, overwrite=True)
-  ng.pipe.write('./esd.ft2',dic_nc, sigma.numpy().real, overwrite=True)
-  ng.pipe.write('./inp.ft2',dic_nc, spec_nc.numpy().real, overwrite=True)
+  ng.pipe.write(outfile,dic_nc, HCout.numpy().real, overwrite=True)
+  ng.pipe.write(esdfile,dic_nc, sigma.numpy().real, overwrite=True)
+  ng.pipe.write(inpfile,dic_nc, spec_nc.numpy().real, overwrite=True)
 
