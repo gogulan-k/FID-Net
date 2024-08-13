@@ -290,10 +290,12 @@ def _aromatic_fidnet2(infile, outfile, model_weights, UseGPU, GPUIDX, offset1h, 
 
 
   print(' INFO: Spectra saved:')
-  print('    Spectrum (dec.ft2) and uncertainties (esd.ft2) ')
-  print('    Input spectrum for reference (inp.ft2) ')
+  print(f'    Spectrum ({outfile}) and uncertainties ({esdfile}) ')
+  print(f'    Input spectrum for reference ({inpfile}) ')
   print('    saved with shape', HCout.shape, 'in nmrPipe format')
-
+  print(outfile)
+  print(esdfile)
+  print(inpfile)
   ng.pipe.write(outfile,dic_nc, HCout.numpy().real, overwrite=True)
   ng.pipe.write(esdfile,dic_nc, sigma.numpy().real, overwrite=True)
   ng.pipe.write(inpfile,dic_nc, spec_nc.numpy().real, overwrite=True)
