@@ -81,9 +81,9 @@ class Settings(BaseSettings):
     # Add subpaths to different files and directories here
     # in one central place instead of spreading them out
 
-    base_url: str = "https://github.com/gogulan-k/FID-Net/releases/download/v0.5-alpha/"
+    base_url: str = "https://github.com/gogulan-k/FID-Net/releases/download/v0.51-alpha/"
     weights_url: str = base_url
-    example_url: str = "https://github.com/gogulan-k/FID-Net/releases/download/v0.5-alpha/example.tar.gz"
+    example_url: str = "https://github.com/gogulan-k/FID-Net/releases/download/v0.51-alpha/example.tar.gz"
     # Weights
     weights_dir: Path = _data_dir / "weights"
     weights_1h_methyl: Path = weights_dir / "fidnet_1h_methyl.h5"
