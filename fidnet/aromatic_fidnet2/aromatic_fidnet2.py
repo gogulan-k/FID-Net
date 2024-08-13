@@ -222,7 +222,6 @@ def _aromatic_fidnet2(infile, model_weights, UseGPU, GPUIDX, offset1h, offset13c
     model.load_weights(model_weights)
     
   infile_nc  = infile
-  outfile = infile_nc.split('.')[0]+'_dec.ft1'
   dic_nc, data_nc = ng.pipe.read(infile_nc)
 
   data_c = data_nc[1,:,:]
