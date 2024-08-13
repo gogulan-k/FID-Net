@@ -142,11 +142,11 @@ def run_examples(skip_3d: bool = True):
     )
     print("\n6/7: Running aromatic side chain FID-Net2 example.")
     run_aromatic(
-        infile = config.example_file_aromatic
-        UseGPU: bool = True,
-        GPUIDX: int = None,
-        offset1h: float = 0.4,
-        offset13c: float = 0.4,
+        infile = config.example_file_aromatic,
+        UseGPU = True,
+        GPUIDX = None,
+        offset1h = 0.4,
+        offset13c = 0.4,
     )
     
     if skip_3d:
