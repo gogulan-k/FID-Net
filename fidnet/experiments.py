@@ -110,16 +110,16 @@ def run_3d_hnca(infile: Path, outfile: Path = Path("fidnet_hnca_decoupled.ft2"))
 def run_examples(skip_3d: bool = True):
     """Run all the examples in one go."""
     out_dir = Path("example_out")
-    print("\n1/6: Running CA detect example.")
+    print("\n1/7: Running CA detect example.")
     run_ca_direct_decouple(config.example_file_ca_detect, out_dir / "ca.ft1")
 
-    print("\n2/6: Running CON decouple example.")
+    print("\n2/7: Running CON decouple example.")
     run_con_direct_decouple(config.example_file_con_decouple, out_dir / "con_decouple.ft1")
 
-    print("\n3/6: Running CTCP decouple example.")
+    print("\n3/7: Running CTCP decouple example.")
     run_ctcp_direct_decouple(config.example_file_ctcp, out_dir / "ctcp.ft1")
 
-    print("\n4/6: Running NUS reconstruction example.")
+    print("\n4/7: Running NUS reconstruction example.")
     run_nus_reconstruction(
         infile=config.example_file_nus_reconstruct,
         sampling_schedule=config.example_file_nus_sampling_schedule,
@@ -129,7 +129,7 @@ def run_examples(skip_3d: bool = True):
         shift=False,
     )
 
-    print("\n5/6: Running methyl 1H-13C example.")
+    print("\n5/7: Running methyl 1H-13C example.")
     run_methyl(
         infile=config.example_file_non_deuterated,
         outdir=out_dir,
@@ -140,13 +140,22 @@ def run_examples(skip_3d: bool = True):
         alt=True,
         neg=True,
     )
+    print("\n6/7: Running aromatic side chain FID-Net2 example.")
+    run_aromatic(
+        infile = config.example_file_aromatic
+        UseGPU: bool = True,
+        GPUIDX: int = None,
+        offset1h: float = 0.4,
+        offset13c: float = 0.4,
+    )
+    
     if skip_3d:
         print(
-            "\n6/6: Skipping 3D HNCA example because it takes a"
+            "\n7/7: Skipping 3D HNCA example because it takes a"
             "long time. Use --no-skip-3d to run it."
         )
     else:
-        print("\n6/6: Running methyl 1H-13C example.")
+        print("\n7/7: Running methyl 1H-13C example.")
         run_3d_hnca(
             config.example_file_hnca,
             str(out_dir / "hnca.ft1"),
