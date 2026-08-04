@@ -84,6 +84,11 @@ def run_methyl(
     p0: float = 0.0,
     alt: bool = False,
     neg: bool = False,
+    yp0: float = 0.0,
+    yp1: float = 0.0,
+    blc: bool = False,
+    yZF: int = 1,
+    xZF: int = 1,
 ):
     download_weights(config.weights_1h_methyl)
     download_weights(config.weights_13c_methyl)
@@ -96,6 +101,11 @@ def run_methyl(
         p0=p0,
         alt=alt,
         neg=neg,
+        yp0=yp0,
+        yp1=yp1,
+        blc=blc,
+        yZF=yZF,
+        xZF=xZF,
     )
 
 
@@ -141,6 +151,11 @@ def run_examples(skip_3d: bool = True):
         p0=151.0,
         alt=True,
         neg=True,
+        yp0=0.0,
+        yp1=0.0,
+        blc=False,
+        yZF=1,
+        xZF=1,
     )
     print("\n6/7: Running aromatic side chain FID-Net2 example.")
     run_aromatic(
