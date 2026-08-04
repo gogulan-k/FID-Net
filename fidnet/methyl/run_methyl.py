@@ -35,7 +35,7 @@ def write_intermediate1(input, outfile, com_file, alt, neg, yp0, yp1, yZF):
         elif alt:
             outy.write("| nmrPipe  -fn FT -alt \\\n")
         elif neg:
-            outy.write("| nmrPipe  -fn FT -alt -neg  \\\n")
+            outy.write("| nmrPipe  -fn FT -neg  \\\n")
         else:
             outy.write("| nmrPipe  -fn FT -auto  \\\n")
         outy.write(f"| nmrPipe  -fn PS -p0 {yp0} -p1 {yp1} -di -verb \\\n")

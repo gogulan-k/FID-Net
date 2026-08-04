@@ -466,11 +466,19 @@ truncated at 256 complex points.
 │                                    [default: fidnet_methyl_CH.ft2]              │
 │    --min-1h                 FLOAT  minimum 1H ppm [default: -1.0]               │
 │    --max-1h                 FLOAT  maximum 1H ppm [default: 2.5]                │
-│    --p0                     FLOAT  1H phase correction [default: 0.0]           │
+│    --p0                     FLOAT  1H p0 phase correction [default: 0.0]        │
+|    --yp0                    FLOAT  13C phase p0 phase correct [default: 0.0]    |
+|    --yp1                    FLOAT  13C phase p1 phase correct [default: 0.0]    |
+|    --xZF                    INT    Zero filling factor for 1H dimension         |
+|                                    [default:1]                                  |
+|    --yZF                    INT    Zero filling factor for 13C dimension        |
+|                                    [default:1]                                  |
 │    --alt        --no-alt           NMRPipe: dimension is left/right swapped     │
 │                                    [default: no-alt]                            │
 │    --neg        --no-neg           NMRPipe: dimension is reversed               │
 │                                    [default: no-neg]                            │
+|    --blc                    BOOL   NMRPipe baseline correction in 13C           |
+|                                    [default: False]                             |
 │    --help                          Show this message and exit.                  │
 ╰─────────────────────────────────────────────────────────────────────────────────╯
 ```

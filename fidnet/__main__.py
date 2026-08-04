@@ -129,8 +129,8 @@ def methyl(
         default=False, help="NMRPipe: dimension is left/right swapped"
     ),
     neg: bool = typer.Option(default=False, help="NMRPipe: dimension is reversed"),
-    yp0: float = typer.Option(default=0.0, help="13C phase correction"),
-    yp1: float = typer.Option(default=0.0, help="13C phase correction"),
+    yp0: float = typer.Option(default=0.0, help="13C P0 phase correction"),
+    yp1: float = typer.Option(default=0.0, help="13C P1 phase correction"),
     blc: bool = typer.Option(default=False, help="NMRPipe baseline correction in 13C"),
     yZF: int = typer.Option(default=1, help="Zero filling factor for 13C dimension"),
     xZF: int = typer.Option(default=1, help="Zero filling factor for 1H dimension"),
