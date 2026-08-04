@@ -467,18 +467,18 @@ truncated at 256 complex points.
 │    --min-1h                 FLOAT  minimum 1H ppm [default: -1.0]               │
 │    --max-1h                 FLOAT  maximum 1H ppm [default: 2.5]                │
 │    --p0                     FLOAT  1H p0 phase correction [default: 0.0]        │
-|    --yp0                    FLOAT  13C phase p0 phase correct [default: 0.0]    |
-|    --yp1                    FLOAT  13C phase p1 phase correct [default: 0.0]    |
-|    --xZF                    INT    Zero filling factor for 1H dimension         |
-|                                    [default:1]                                  |
-|    --yZF                    INT    Zero filling factor for 13C dimension        |
-|                                    [default:1]                                  |
+│    --yp0                    FLOAT  13C phase p0 phase correct [default: 0.0]    │
+│    --yp1                    FLOAT  13C phase p1 phase correct [default: 0.0]    │
+│    --xZF                    INT    Zero filling factor for 1H dimension         │
+│                                    [default:1]                                  │
+│    --yZF                    INT    Zero filling factor for 13C dimension        │
+│                                    [default:1]                                  │
 │    --alt        --no-alt           NMRPipe: dimension is left/right swapped     │
 │                                    [default: no-alt]                            │
 │    --neg        --no-neg           NMRPipe: dimension is reversed               │
 │                                    [default: no-neg]                            │
-|    --blc                    BOOL   NMRPipe baseline correction in 13C           |
-|                                    [default: False]                             |
+│    --blc                    BOOL   NMRPipe baseline correction in 13C           │
+│                                    [default: False]                             │
 │    --help                          Show this message and exit.                  │
 ╰─────────────────────────────────────────────────────────────────────────────────╯
 ```
@@ -512,17 +512,17 @@ The example folder contains data for uniformly 13C-1H labelled HDAC8.
 │    --outfile                PATH   filename for final processed spectrum.       │
 │                                    [default: aromatic_output.ft2]               │
 │    --UseGPU                 BOOL   True to use GPU.                             │
-|                                    [default: True]                              |
+│                                    [default: True]                              │
 │    --GPUIDX                 INT    GPU number to use                            │
-|                                    [default: None]                              |
-│    --offset1h               FLOAT  Set the offset for the sine-squared window   |
-|                                    function in the 1H dimension. Default is     |
-|                                    0.40, which was used during training         │
-│                                    [default: 0.4]                               |
-│    --offset13c              FLOAT  Set the offset for the sine-squared window   |
-|                                    function in the 1H dimension. Default is     |
-|                                    0.40, which was used during training         │
-│                                    [default: 0.4]                               |
+│                                    [default: None]                              │
+│    --offset1h               FLOAT  Set the offset for the sine-squared window   │
+│                                    function in the 1H dimension. Default is     │
+│                                    0.40, which was used during training         │
+│                                    [default: 0.4]                               │
+│    --offset13c              FLOAT  Set the offset for the sine-squared window   │
+│                                    function in the 1H dimension. Default is     │
+│                                    0.40, which was used during training         │
+│                                    [default: 0.4]                               │
 │    --help                          Show this message and exit.                  │
 ╰─────────────────────────────────────────────────────────────────────────────────╯
 ```
